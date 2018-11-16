@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{590C8889-8908-4B54-852E-67A27192AEF4}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Comba.T4</RootNamespace>
+    <AssemblyName>Comba.T4</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="RegisterAutomapper.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegisterAutomapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dto.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IServices.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IServices.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Models.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Repositories.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RepositoriesExtend.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RepositoriesExtend.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Services.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT_Aspx\AddAspx.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AddAspx.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT_Aspx\AddAspx_cs.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AddAspx_cs.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT_Aspx\ManageAspx_cs.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ManageAspx_cs.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT_Aspx\ManageAspx.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ManageAspx.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT_WabApi\WebApi.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WebApi.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config.ttinclude" />
+    <None Include="DbHelper.ttinclude" />
+    <None Include="RegisterAutomapper.log">
+      <DependentUpon>RegisterAutomapper.tt</DependentUpon>
+    </None>
+    <None Include="TT_Aspx\AddAspx.log">
+      <DependentUpon>AddAspx.tt</DependentUpon>
+    </None>
+    <None Include="TT_Aspx\AddAspx.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AddAspx.cs</LastGenOutput>
+    </None>
+    <None Include="TT_Aspx\AddAspx_cs.log">
+      <DependentUpon>AddAspx_cs.tt</DependentUpon>
+    </None>
+    <None Include="TT_Aspx\AddAspx_cs.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AddAspx_cs.cs</LastGenOutput>
+    </None>
+    <None Include="TT_Aspx\ManageAspx_cs.log">
+      <DependentUpon>ManageAspx_cs.tt</DependentUpon>
+    </None>
+    <None Include="TT_Aspx\ManageAspx_cs.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ManageAspx_cs.cs</LastGenOutput>
+    </None>
+    <None Include="Dto.log">
+      <DependentUpon>Dto.tt</DependentUpon>
+    </None>
+    <None Include="Dto.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Dto.cs</LastGenOutput>
+    </None>
+    <None Include="IServices.log">
+      <DependentUpon>IServices.tt</DependentUpon>
+    </None>
+    <None Include="IServices.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IServices.cs</LastGenOutput>
+    </None>
+    <None Include="Models.log">
+      <DependentUpon>Models.tt</DependentUpon>
+    </None>
+    <None Include="Models.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Models.cs</LastGenOutput>
+    </None>
+    <None Include="MultipleOutputHelper.ttinclude" />
+    <None Include="Repositories.log">
+      <DependentUpon>Repositories.tt</DependentUpon>
+    </None>
+    <None Include="Repositories.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Repositories.cs</LastGenOutput>
+    </None>
+    <None Include="RepositoriesExtend.log">
+      <DependentUpon>RepositoriesExtend.tt</DependentUpon>
+    </None>
+    <None Include="RepositoriesExtend.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RepositoriesExtend.cs</LastGenOutput>
+    </None>
+    <None Include="Services.log">
+      <DependentUpon>Services.tt</DependentUpon>
+    </None>
+    <None Include="Services.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Services.cs</LastGenOutput>
+    </None>
+    <None Include="TT_Aspx\ManageAspx.log">
+      <DependentUpon>ManageAspx.tt</DependentUpon>
+    </None>
+    <None Include="TT_Aspx\ManageAspx.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ManageAspx.cs</LastGenOutput>
+    </None>
+    <None Include="TT_WabApi\WebApi.log">
+      <DependentUpon>WebApi.tt</DependentUpon>
+    </None>
+    <None Include="TT_WabApi\WebApi.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WebApi.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\YF.Base\YF.Base.csproj">
+      <Project>{257b6c5e-e434-41b3-8c6c-214a4f9b8cca}</Project>
+      <Name>YF.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YF.Utility\YF.Utility.csproj">
+      <Project>{d9855b28-7d03-4277-ac69-0b8ce06f47f9}</Project>
+      <Name>YF.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RegisterAutomapper.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RegisterAutomapper.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

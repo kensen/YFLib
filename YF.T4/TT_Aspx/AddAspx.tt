@@ -1,0 +1,195 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="System.xml" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.Data" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ include file="$(ProjectDir)MultipleOutputHelper.ttinclude" #>
+<#@ include file="$(ProjectDir)DbHelper.ttinclude"  #>
+<#@ include file="$(ProjectDir)Config.ttinclude"  #>
+
+<#@ assembly name="EnvDTE" #>
+<#@ assembly name="EnvDTE100" #>
+<#
+  IServiceProvider serviceProvider = (IServiceProvider)this.Host;
+  EnvDTE.DTE dte = (EnvDTE.DTE) serviceProvider.GetService(typeof(EnvDTE.DTE));
+#>
+
+
+<#
+   List<DbTable> tablelist=DbHelper.GetDbTables(config.ConnectionString,config.DbDatabase,config.Tables );
+#>
+<#	
+	// OutPutConfig output=new OutPutConfig(Host,"ConsoleApplication1","Models");
+	//output.OutProjectName="ConsoleApplication1";
+	//output.OutFolder="Models";
+		 //output.OutPutPath=Host.ResolveAssemblyReference("$(ProjectDir)")+"Models";
+		 //output.OutPutProject=dte.Solution.FindProjectItem(Host.ResolveAssemblyReference("$(SolutionDir)")+"YF.T4\\Properties\\AssemblyInfo.cs").ContainingProject.ProjectItems;
+	var manager = Manager.Create(Host, GenerationEnvironment);  
+	manager.OutProjectName="YF.T4";
+	manager.OutFolder="Out\\Aspx";
+   foreach(DbTable table in tablelist)
+   {
+	   manager.StartNewFile(table.TableName+"Add.aspx");
+ #>
+ 
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="<#=table.TableName#>Add.aspx.cs" Inherits="<#= config.AspxNamespace #>.<#=table.TableName#>Add" %>
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>添加</title>
+<link href="../Style/Default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../Js/jquery.min.js"></script>
+<script type="text/javascript" src="../Js/formValidator.js"></script>
+<script type="text/javascript" src="../JS/My97DatePicKer/WdatePicker.js" language="javascript"></script>
+<script type="text/javascript" src="../Js/ajaxupload.js" language="javascript"></script>
+
+    <style type="text/css">
+        .style1
+        {
+            height: 14px;
+        }
+    </style>
+
+</head>
+
+<body style="">
+<form id="form1" runat="server">
+<table cellspacing="6" cellpadding="0" border="0" width="100%" style="border-collapse: separate; border-spacing: 6px;">
+	<tbody><tr valign="top">
+	    <td>
+		<table cellspacing="0" cellpadding="4" border="0" width="100%" class="blockTable">
+	      <tbody><tr>
+	        <td valign="middle" class="blockTd"> </td>
+	      </tr>
+					
+	      <tr>
+	        <td style="padding: 0px 6px 8px;">
+			
+			<!-- 插入表单 -->
+			<div>
+				<fieldset>
+					<legend><span style="vertical-align:middle ; line-height:25px; height:25px;"> 友情链接</span></legend>
+					<div >
+						<table cellspacing="0" cellpadding="1"  class="infoTable" width="100%">
+							<col id="col_1" align="right" style="text-align:right " ></col>
+							<col id="col_2" align="left" style="text-align:left" ></col>
+							<tbody>
+							<# List<DbColumn> columnlist= DbHelper.GetDbColumns(config.ConnectionString, config.DbDatabase, table.TableName); #>
+							<# foreach(DbColumn column in columnlist){#>							
+							 <tr>
+                                    <td style="text-align:right"> <#=column.Remark#>: </td>
+                                    <td >                                           
+									<# if( column.CSharpType=="bool"){#>
+									<asp:CheckBox ID="txt<#=column.ColumnName#>" runat="server" Text="<#=column.Remark#>"   />
+									<#}else if( column.CSharpType=="DateTime"){#>
+									<input type="text"   value="" id="txt<#=column.ColumnName#>" runat="server" class="inputText"  onfocus="WdatePicker()"  />
+									<#}else if( column.CSharpType=="int" ||  column.CSharpType=="decimal" ){#>
+									<input type="text"  value="" id="txt<#=column.ColumnName#>"  runat="server"  class="inputText" name="Name" style="" onkeyup ="clearNoNum(this)"/>                                    
+									<#}else {#>
+									<input type="text"  value="" id="txt<#=column.ColumnName#>"  runat="server"  class="inputText" name="Name" style=""/>                                    
+									<#}#>
+									<# if(!column.IsNullable){#>
+									<span ztype="Verify" style="color: red; padding-left: 2px; padding-top: 13px;">*</span>
+									<#}#>
+									</td>                                    
+                             </tr>    
+							<#}#>	
+
+							     <tr>
+                                    <td></td>
+                                    <td>
+                                        <asp:LinkButton ID="lbtnAdd"  CssClass="zPushBtn" runat="server"  
+                                            OnClientClick="javascript:return checkForm();" onclick="lbtnAdd_Click"><img src="../Icons/icon403a1.gif"/><b>保存&nbsp;</b></asp:LinkButton>
+                                    <a  id="" onselectstart="return false" tabindex="-1" hidefocus="true" class="zPushBtn" ztype="zPushBtn" href="<%= ViewState["BackUrl"] %>"><img src="../Icons/ico_cancel.gif"/><b>取消&nbsp;	</b></a>   
+                                    </td>
+
+                            </tbody>
+						</table>
+					</div>
+				</fieldset>
+			</div>
+			<!-- 结束-->
+	    </td>
+	  </tr>
+	  
+	  
+	  
+	</tbody></table>
+	</td>
+	</tr>
+	</tbody></table>
+            
+</form>
+<script type="text/javascript">
+
+        $(document).ready(function() {
+
+            setMainBoxSize();
+            iframe_resize();
+
+        });
+
+        $(window).wresize(function() {
+            setMainBoxSize();
+        });
+
+        function setMainBoxSize() {
+              var w = $(window);
+        var H = $('.dataTable').height();
+        var Width = w.width();
+        //alert(H);
+        $('#MainBox').css({ height: H + 30 });
+        $('#MainBox').css({ width: Width - 50 });
+
+
+        };
+        
+        //重置父窗体Iframe高度
+        function iframe_resize() {
+            var main = $(window.parent.document).find("#_MainArea");
+            var thisheight = $('.blockTable').height();
+            main.height(thisheight < 600 ? 600 : thisheight);
+            // alert(thisheight);
+            return true;
+        };
+
+		 function checkForm() {
+            if (!$.formValidator.pageIsValid('1')) {
+                return false;
+            } else {
+                return null;
+            }
+        };
+        function clearNoNum(obj) {
+
+        obj.value = obj.value.replace(/[^\d.]/g, "");
+        obj.value = obj.value.replace(/^\./g, "");
+        obj.value = obj.value.replace(/\.{2,}/g, ".");
+        obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+        
+        };
+            
+       
+</script>
+</body>
+
+</html>
+
+<#
+   manager.EndBlock();    
+   }
+   //this.Host.ResolvePath
+   manager.Process(true);
+    
+   #>
+
+  
+  
+
+

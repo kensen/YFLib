@@ -1,0 +1,336 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="System.xml" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.Data" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+
+<#@ include file="$(ProjectDir)MultipleOutputHelper.ttinclude" #>
+<#@ include file="$(ProjectDir)DbHelper.ttinclude"  #>
+<#@ include file="$(ProjectDir)Config.ttinclude"  #>
+
+<#@ assembly name="EnvDTE" #>
+<#@ assembly name="EnvDTE100" #>
+<#
+  IServiceProvider serviceProvider = (IServiceProvider)this.Host;
+  EnvDTE.DTE dte = (EnvDTE.DTE) serviceProvider.GetService(typeof(EnvDTE.DTE));
+#>
+
+
+<#
+   List<DbTable> tablelist=DbHelper.GetDbTables(config.ConnectionString,config.DbDatabase,config.Tables );
+#>
+<#	
+	// OutPutConfig output=new OutPutConfig(Host,"ConsoleApplication1","Models");
+	//output.OutProjectName="ConsoleApplication1";
+	//output.OutFolder="Models";
+		 //output.OutPutPath=Host.ResolveAssemblyReference("$(ProjectDir)")+"Models";
+		 //output.OutPutProject=dte.Solution.FindProjectItem(Host.ResolveAssemblyReference("$(SolutionDir)")+"YF.T4\\Properties\\AssemblyInfo.cs").ContainingProject.ProjectItems;
+	var manager = Manager.Create(Host, GenerationEnvironment);  
+	manager.OutProjectName="YF.T4";
+	manager.OutFolder="Out\\Aspx";
+   foreach(DbTable table in tablelist)
+   {
+	   manager.StartNewFile(table.TableName+"Manage.aspx");
+ #>
+ 
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="<#=table.TableName#>Manage.aspx.cs" Inherits="<#= config.AspxNamespace #>.<#=table.TableName#>Manage" %>
+<%@ Register Assembly="AspNetPager" Namespace="Wuqi.Webdiyer" TagPrefix="webdiyer" %>
+<%@ Import Namespace="<#= config.DtoNamespace #>" %>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>新闻管理</title>
+<link href="../Style/Default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../Js/jquery.min.js" language="javascript" ></script>
+<script type="text/javascript" src="../Js/jqModal.js" language="javascript" ></script>
+<script type="text/javascript" src="../Js/jquery.wresize.js" language="javascript" ></script>
+<script type="text/javascript" src="../Js/jquery.optionTree.js"></script>
+<script type="text/javascript" src="../JS/My97DatePicKer/WdatePicker.js" language="javascript"></script>
+    <script type="text/javascript" src="../Js/format.js" ></script>
+<link href="../Style/jqModal.css" rel="stylesheet" type="text/css" />
+
+    <style type="text/css">
+        .style1
+        {
+            height: 14px;
+        }
+    </style>
+
+</head>
+
+<body style="">
+<form id="form1" runat="server">
+<table cellspacing="6" cellpadding="0" border="0" width="100%" style="border-collapse: separate; border-spacing: 6px;">
+	<tbody><tr valign="top">
+	    <td>
+		<table cellspacing="0" cellpadding="4" border="0" width="100%" class="blockTable">
+	      <tbody><tr>
+	        <td valign="middle" class="blockTd"><img src="../Icons/icon031a6.gif"/>&nbsp; 
+			内容管理</td>
+	      </tr>
+			<tr>
+			<td style="padding: 0pt 8px 4px;">
+			<a  id="btn_add" runat="server"  tabindex="-1" hidefocus="true" class="zPushBtn" ztype="zPushBtn" href="<#=table.TableName#>Add.aspx"><img src="../Icons/icon022a2.gif"/><b>新建</b></a> 
+	        <a  id="btn_del" runat="server"  tabindex="-1" hidefocus="true" class="zPushBtn" ztype="zPushBtn" href="javascript:void(0);"><img src="../Icons/icon022a3.gif"/><b>删除</b></a> 
+	        <a  id="btn_update" runat="server"  tabindex="-1" hidefocus="true" class="zPushBtn" ztype="zPushBtn" href="javascript:void(0);"><img src="../Icons/icon022a4.gif"/><b>修改</b></a>
+		    <a  id="btn_Import" visible="False" runat="server"  tabindex="-1" hidefocus="true" class="zPushBtn" ztype="zPushBtn" href="javascript:void(0)"><img src="../Icons/icon003a7.gif"/><b>数据导入</b></a>
+			
+			<div  style="float: right; white-space: nowrap; display:none;">
+			    <a href="../TemplateData/新闻管理上传模板.xls"> 新闻管理上传模板下载</a>
+			</div>
+            
+			<div style="padding-top:5px; clear:both">
+				<hr />
+			</div>
+	        </td>
+	      </tr>
+	      <tr>
+	        <td style="padding: 0px 6px 8px;">
+			<!-- 插入表单内容 -->
+	 <div id="MainBox" style="width:800px; overflow:auto; border:1px #C6C6C6 solid ;">
+	  <table cellspacing="0" cellpadding="2" width="100%" class="dataTable">
+	    <tbody>
+    		<tr class="dataTableHead">
+              <td style='width:40px;<%=ViewState["edit"] %>'>编辑</td>              
+			   <# List<DbColumn> columnlist= DbHelper.GetDbColumns(config.ConnectionString, config.DbDatabase, table.TableName); #>
+					<# foreach(DbColumn column in columnlist){#>	
+					<td><#=column.Remark#></td>
+					<#}#>					
+            </tr>
+        
+    
+      <asp:Repeater ID="Rep<#=table.TableName#>" runat="server">
+        <ItemTemplate>                   
+            <tr id="row_<%# ((<#=table.TableName#>Dto) Container.DataItem).Id %>" name="row_<%# ((<#=table.TableName#>Dto) Container.DataItem).Id %>" class="rowOdd">				
+                
+                 <td style='<%=ViewState["edit"] %>'><a id='edit_<%# ((<#=table.TableName#>Dto) Container.DataItem).Id %>' name="edit_<%# ((<#=table.TableName#>Dto) Container.DataItem).Id %>" href="#" title="编辑"><img src="../Icons/icon003a4.gif" /></a></td>       
+				 <# foreach(DbColumn column in columnlist){#>	
+					<td><%#  ((<#=table.TableName#>Dto) Container.DataItem).<#=column.ColumnName#>   %></td>
+					<#}#>	
+            </tr>
+        </ItemTemplate>
+        <AlternatingItemTemplate>
+    		<tr id="row_<%# ((<#=table.TableName#>Dto) Container.DataItem).Id %>" name="row_<%# ((<#=table.TableName#>Dto) Container.DataItem).Id %>"  >				
+                
+                 <td style='<%=ViewState["edit"] %>'><a id='edit_<%# ((<#=table.TableName#>Dto) Container.DataItem).Id %>' name="edit_<%# ((<#=table.TableName#>Dto) Container.DataItem).Id %>" href="#" title="编辑"><img src="../Icons/icon003a4.gif" /></a></td>         
+				 <# foreach(DbColumn column in columnlist){#>	
+					<td><%#  ((<#=table.TableName#>Dto) Container.DataItem).<#=column.ColumnName#>   %></td>
+					<#}#>	
+            </tr>
+        </AlternatingItemTemplate>
+      </asp:Repeater>
+    </tbody>
+</table>	
+			</div>
+			<div>
+                <webdiyer:AspNetPager ID="AspNetPager1" runat="server" 
+                    onpagechanged="AspNetPager1_PageChanged">
+                </webdiyer:AspNetPager>
+			</div>
+            
+
+            
+	    </td>
+	  </tr>
+	</tbody></table>
+	</td>
+	</tr>
+	</tbody></table>
+    
+    <!-- 弹出模式对话框-导入数据 -->
+
+            <div style=" width:426px" id="ShowImport" class="jqmWindow">
+            
+            <table cellspacing="0" cellpadding="0" border="0" width="426px" style="-moz-user-select: none;">
+            <tbody><tr  >
+                <td height="33" width="13" style="background-image: url(../Images/dialog_lt.png) ! important;"><div style="width: 13px;"></div></td>
+                <td height="33" style="background-image: url(../Images/dialog_ct.png) ! important;"><div style="padding: 9px 0pt 0pt 4px; float: left; font-weight: bold; color: rgb(255, 255, 255);"><img align="absmiddle" src="../Images/icon_dialog.gif">&nbsp;数据导入</div>
+                <div class="jqmClose"  onmouseout="this.style.backgroundImage='url(../Images/dialog_closebtn.gif)'" onmouseover="this.style.backgroundImage='url(../Images/dialog_closebtn_over.gif)'" style="margin: 5px 0pt 0pt; position: relative; cursor: pointer; float: right; height: 17px; width: 28px; background-image: url(../Images/dialog_closebtn.gif);"></div></td>
+                <td height="33" width="13" style="background-image: url(../Images/dialog_rt.png) ! important;"><div style="width: 13px;"></div></td>
+            </tr>
+            <tr drag="false"><td width="13" style="background-image: url(../Images/dialog_mlm.png) ! important;"></td>
+                <td align="center" valign="top">
+                <table cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" width="100%">
+                    <tbody><tr style="display: none;" id="_MessageRow_Diag2">
+                    <td height="50" valign="top"></td></tr>
+                    <tr><td align="center" valign="top">
+                        &nbsp;
+                        <!-- 插入表单内容 -->
+                        <div style="width:100%">
+                            <table>
+                                <tr>
+                                        <td style="text-align:right;"><span >基础数据：</span></td>
+                                    <td style="text-align:left;"><span><input  id="ImportFile" name="ImportFile" type="file" runat="server" /></span></td>
+                                    
+                                </tr>     
+                                
+                            </table>
+                            <br />
+                        </div>
+                        <!-- 结束 -->
+                        </td></tr>
+                    <tr id="_ButtonRow_Diag2" drag="false"><td height="36">
+                        <div style="border-top: 1px solid rgb(218, 222, 229); padding: 8px 20px; text-align: right; background-color: rgb(246, 246, 246);" id="_DialogButtons_Diag2">
+                        <a tabindex="-1" hidefocus="true" class="zInputBtn" ztype="zInputBtnWrapper" href="javascript:void(0);">
+                            <asp:Button ID="btnUploadFile" CssClass="inputButton" runat="server" Text="确 定" onclick="btnUploadFile_Click" 
+                                /></a>
+                        <a tabindex="-1" hidefocus="true" class="zInputBtn" ztype="zInputBtnWrapper" href="javascript:void(0);"><input type="button" class="inputButton jqmClose" id="_ButtonCancel_Diag2" value="取 消"></a>
+                        </div></td></tr>
+                </tbody></table><a onfocus="$(&quot;_DialogFrame_Diag1&quot;).focus();" href="#;"></a></td>
+                <td width="13" style="background-image: url(../Images/dialog_mrm.png) ! important;"></td></tr>
+            <tr><td height="13" width="13" style="background-image: url(../Images/dialog_lb.png) ! important;"></td>
+                <td style="background-image: url(../Images/dialog_cb.png) ! important;"></td>
+                <td height="13" width="13" style="background-image: url(../Images/dialog_rb.png) ! important;"></td>
+            </tr></tbody></table></div>
+            
+</form>
+<script type="text/javascript">
+
+        $(document).ready(function() {
+
+            setMainBoxSize();
+            $("#ShowImport").jqm({ overlay: 10, modal: true, trigger: false });
+            bindEvent();
+            iframe_resize();
+
+        });
+
+        $(window).wresize(function() {
+            setMainBoxSize();
+        });
+
+        function setMainBoxSize() {
+              var w = $(window);
+        var H = $('.dataTable').height();
+        var Width = w.width();
+        //alert(H);
+        $('#MainBox').css({ height: H + 30 });
+        $('#MainBox').css({ width: Width - 50 });
+
+
+        };
+        
+        //重置父窗体Iframe高度
+        function iframe_resize() {
+            var main = $(window.parent.document).find("#_MainArea");
+            var thisheight = $('.blockTable').height();
+            main.height(thisheight < 600 ? 600 : thisheight);
+            // alert(thisheight);
+            return true;
+        }
+
+        var access=<%=ViewState["access"] %>;
+        function bindEvent() {
+            //数据行双点击事件绑定,双击跳转到修改页面
+            $("tr[name^='row_']").bind({
+            dblclick: function() {
+            $(".rowSelect").toggleClass("rowSelect");
+                    if (!$(this).is('.rowSelect')) {
+                        $(this).addClass('rowSelect');
+                    }
+                    var id = this.id.replace('row_', '');
+                    if(access==1)
+                    {
+                        window.location.href = "<#=table.TableName#>Add.aspx?Id=" + id +"&backurl=" + escape(returnUrl());
+                    }
+                },
+                click: function() {	  	 //单击改变颜色
+                    //currClass=$(this).attr("Class");
+                    $(this).toggleClass("rowSelect");
+                }
+
+            });
+
+            //每行编辑按钮事件触发
+            $("a[name^='edit_']").click(function(){
+                selids = this.id.replace('edit_', '');
+                window.location.href = "<#=table.TableName#>Add.aspx?Id=" + selids +"&backurl=" + escape(returnUrl());
+                return false;
+            });
+
+            //绑定导入按钮
+            $("#btn_Import").click(function() {
+    
+                $("#ShowImport").jqmShow();
+    
+            });
+
+            //绑定按钮点击事件，获取选中的行的Id：修改或删除
+            //btn_del为删除按钮的ID
+            $("#btn_del").click(function() {
+
+                var selids = "";
+                $(".rowSelect").each(function() {
+                    selids += this.id.replace('row_', '') + ',';
+                });
+                selids = selids.substring(0, selids.length - 1);
+                if (selids === "") {
+                    alert("请选择要删除的记录！");
+                    return false;
+                }
+                //alert(selids.substring(0,selids.length-1));
+                if (window.confirm("确定要删除该记录吗？")) {
+
+                    $.ajax({
+                        method: "DELETE",
+                        dataType: "json",
+                        url: "/api/<#=table.TableName#>",
+                        data: {"":selids}
+                    }).done(function(data) {
+                        if (data.Succeed) {
+                            alert("删除成功！");
+                            var sarray = new Array();
+                            sarray = selids.split(',');
+                            for (var i = 0; i < sarray.length; i++) {
+                                $("#row_" + sarray[i]).remove();
+                            }
+                            return;
+                        } else {
+                            alert("删除失败！");
+                            return;
+                        }
+                    });
+
+                }
+
+            });
+
+            //绑定按钮点击事件，获取选中的行的Id：删除
+            $("#btn_update").click(function() {
+                var selids = "";
+                $(".rowSelect").each(function() {
+                    selids = this.id.replace('row_', '');
+                });
+                if (selids == "") {
+
+                    alert("请选择要修改的记录！");
+                    return false;
+                   
+                }
+                window.location.href = "<#=table.TableName#>Add.aspx?Id=" + selids;
+                return false;
+            });
+
+            
+        }
+</script>
+</body>
+
+</html>
+
+<#
+   manager.EndBlock();    
+   }
+   //this.Host.ResolvePath
+   manager.Process(true);
+    
+   #>
+
+  
+  
+
+
