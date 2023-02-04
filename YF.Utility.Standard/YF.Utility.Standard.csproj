@@ -9,6 +9,8 @@
     <FileVersion>1.0.1.0</FileVersion>
     <Version>1.0.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	  <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="..\YF.Utility\Properties\AssemblyInfo.cs" />
     <Compile Remove="..\YF.Utility\Properties\Resources.Designer.cs" />
   </ItemGroup>
 
