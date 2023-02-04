@@ -2,15 +2,15 @@
 	public class config
 	{
 
-		//public static readonly string ConnectionString="Data Source=(local);Integrated Security=true;Initial Catalog=Northwind;";
-		public static readonly string ConnectionString="Data Source=192.168.32.62;Initial Catalog=Test;User Id=sa;Password=1qaz@WSX;";
-		public static readonly string DbDatabase="Test"; //设置读取数据库
-		public static readonly string Tables="ExemptionMaterials"; //指定生成输出的表,多个独立表可用逗号隔开
+		public static readonly string ConnectionString="Data Source=DESKTOP-J300JRN;Integrated Security=true;Initial Catalog=STDB;";
+		//public static readonly string ConnectionString="Data Source=192.168.32.62;Initial Catalog=Test;User Id=sa;Password=1qaz@WSX;";
+		public static readonly string DbDatabase="STDB"; //设置读取数据库
+		public static readonly string Tables="ST_DriverExt,ST_DriverExtToOrder"; //指定生成输出的表,多个独立表可用逗号隔开
 		public static readonly string ModelNamespace="App.Models";
 		public static readonly string DtoNamespace="App.Services.Dto";
 		public static readonly string RepositoryNamespace="App.Repositories";
 		public static readonly string ServicesNamespace="App.Services";
-		public static readonly string AspxNamespace="Test";
+		public static readonly string AspxNamespace="STlogistics";
 		//public static readonly string outputPath=
 	}
 #>

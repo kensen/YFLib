@@ -42,6 +42,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Out\Aspx\ST_DriverExtAdd.aspx.cs">
+      <DependentUpon>ST_DriverExtAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Out\Aspx\ST_DriverExtManage.aspx.cs">
+      <DependentUpon>ST_DriverExtManage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Out\Aspx\ST_DriverExtToOrderAdd.aspx.cs">
+      <DependentUpon>ST_DriverExtToOrderAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Out\Aspx\ST_DriverExtToOrderManage.aspx.cs">
+      <DependentUpon>ST_DriverExtToOrderManage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Out\Dto\ST_DriverExtDto.cs" />
+    <Compile Include="Out\Dto\ST_DriverExtToOrderDto.cs" />
+    <Compile Include="Out\Models\ST_DriverExt.cs" />
+    <Compile Include="Out\Models\ST_DriverExtToOrder.cs" />
+    <Compile Include="Out\Repositories\Base\ST_DriverExtRepositories.cs" />
+    <Compile Include="Out\Repositories\Base\ST_DriverExtToOrderRepositories.cs" />
+    <Compile Include="Out\Repositories\ST_DriverExtRepositoriesExtend.cs" />
+    <Compile Include="Out\Repositories\ST_DriverExtToOrderRepositoriesExtend.cs" />
+    <Compile Include="Out\Services\IST_DriverExt.cs" />
+    <Compile Include="Out\Services\IST_DriverExtToOrder.cs" />
+    <Compile Include="Out\Services\ST_DriverExtService.cs" />
+    <Compile Include="Out\Services\ST_DriverExtToOrderService.cs" />
+    <Compile Include="Out\Service\RegisterAutomapper.cs" />
+    <Compile Include="Out\WebApi\ST_DriverExtController.cs" />
+    <Compile Include="Out\WebApi\ST_DriverExtToOrderController.cs" />
     <Compile Include="RegisterAutomapper.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -211,6 +238,12 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RegisterAutomapper.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Out\Aspx\ST_DriverExtAdd.aspx" />
+    <Content Include="Out\Aspx\ST_DriverExtManage.aspx" />
+    <Content Include="Out\Aspx\ST_DriverExtToOrderAdd.aspx" />
+    <Content Include="Out\Aspx\ST_DriverExtToOrderManage.aspx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

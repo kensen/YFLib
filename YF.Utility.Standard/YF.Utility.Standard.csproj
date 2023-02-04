@@ -7,6 +7,11 @@
     <Company>yu</Company>
     <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <FileVersion>1.0.0.1</FileVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/kensen/YFLib</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/kensen/YFLib</RepositoryUrl>
+    <PackageTags>.net 工具类集合</PackageTags>
+    <PackageReleaseNotes>工具类集合</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

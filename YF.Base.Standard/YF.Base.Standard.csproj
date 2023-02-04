@@ -3,9 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>yu</Authors>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
-    <FileVersion>1.0.0.1</FileVersion>
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
+    <FileVersion>1.0.0.2</FileVersion>
     <RootNamespace>YF.Base</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/kensen/YFLib</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/kensen/YFLib</RepositoryUrl>
+    <PackageTags>dapper repository extend</PackageTags>
+    <PackageReleaseNotes>.net core 下的 dapper repository 扩展。</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\YF.Base\**\*.cs" />
