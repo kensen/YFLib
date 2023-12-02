@@ -31,8 +31,7 @@ namespace YF.Base.Data
         public string GetPageSelString(string strSelSrc, SortCondition sort, string strShowCol, int intPageSize, int intCurrentIndex)
         {
             // select * from (select row_number() over (order by CheckID) row,* from (select * from CheckInfo) a)z
-            //where row between 0 and 100
-            
+            //where row between 0 and 100            
             
             var builder = new StringBuilder();
 
